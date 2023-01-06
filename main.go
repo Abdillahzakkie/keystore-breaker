@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 
+	"github.com/abdillahzakkie/keystore-breaker/utils"
 	"github.com/pavlo-v-chernykh/keystore-go/v4"
 )
 
@@ -54,7 +55,11 @@ func zeroing(buf []byte) {
 }
 
 func main() {
-	passwords := []string{"password1", "password2", "password3", "password4", "password5", "password6"}
+	
+	passwords, err := utils.LoadPassword("./keystores/passwords.txt"); if err != nil {
+		log.Fatal("Error while loading password file. Please check if it exists in ./keystores/passwords.txt")
+	}
+
 	var result keystore.KeyStore = keystore.KeyStore{}
 
 	for i := 0; i < len(passwords); i++ {
